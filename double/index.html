@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>英漢翻牌遊戲（雙人對戰版）</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- 讀取 Excel 用的套件 SheetJS（xlsx） -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- 用來壓縮設定用的套件 LZ-String（縮短網址參數） -->
+    <script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
+</head>
+<body>
+
+<h1>英漢翻牌記憶遊戲（雙人對戰）</h1>
+<div id="modeInfo"></div>
+
+<div id="controls">
+    <!-- 老師模式：匯入 Excel -->
+    <div class="row admin-only" id="rowFile">
+        <label for="fileInput">匯入單字 Excel 檔（A欄英文，B欄中文）：</label>
+        <input type="file" id="fileInput" accept=".xlsx,.xls">
+    </div>
+
+    <!-- 老師模式：設定時間限制 -->
+    <div class="row admin-only" id="rowTime">
+        <label for="timeLimitInput">
+            時間限制（秒）： 
+            <input type="number" id="timeLimitInput" value="300" min="30" max="3600">
+        </label>
+        <span class="hint">（例如 300 秒 = 5 分鐘）</span>
+    </div>
+
+    <!-- 雙人姓名輸入 -->
+    <div class="row" id="rowNames">
+        <label for="player1Name">玩家1：</label>
+        <input type="text" id="player1Name" placeholder="例如：小明">
+        <label for="player2Name" style="margin-left:8px;">玩家2：</label>
+        <input type="text" id="player2Name" placeholder="例如：小華">
+        <span class="hint">（兩人共用同一台裝置輪流翻牌）</span>
+    </div>
+
+    <!-- 老師 + 學生 都會看到：開始一局、語音開關 -->
+    <div class="row">
+        <button id="startRoundBtn" disabled>開始新一局（4×4）</button>
+        <label class="sound-label">
+            <input type="checkbox" id="soundToggle" checked>
+            翻牌時唸出文字
+        </label>
+    </div>
+
+    <!-- 老師模式：產生遊戲連結（用來做 QR） -->
+    <div class="row admin-only" id="rowShare">
+        <button id="generateLinkBtn">產生遊戲連結（給學生掃 QR）</button>
+    </div>
+
+    <div class="row admin-only" id="rowLinkOut">
+        <input type="text" id="linkOutput" readonly style="width: 90%;" placeholder="產生的遊戲連結會顯示在這裡">
+    </div>
+
+    <div class="row">
+        <span id="wordInfo">目前尚未匯入單字</span>
+    </div>
+</div>
+
+<div id="infoBar">
+    剩餘時間：<span id="time">0</span> 秒　
+    玩家1分數：<span id="scoreP1">0</span> 分　
+    玩家2分數：<span id="scoreP2">0</span> 分　
+    現在輪到：<span id="currentPlayer">玩家1</span>
+</div>
+
+<div id="rules">
+    <h2>遊戲規則說明（雙人對戰）</h2>
+    <ol>
+        <li>老師在「老師模式」中匯入單字 Excel（A 欄英文、B 欄中文），並設定時間限制後，產生遊戲連結給學生掃描。</li>
+        <li>兩位玩家在同一台裝置上，輸入各自姓名（未輸入則顯示為「玩家1／玩家2」）。</li>
+        <li>按「開始新一局」產生 4×4 卡牌（共 8 組英漢配對），在倒數時間內可以玩多局，分數會累計。</li>
+        <li>輪到某位玩家時，可以翻兩張牌：
+            <ul>
+                <li>若配對成功：該玩家加 10 分，且可以繼續翻下一對。</li>
+                <li>若配對失敗：兩張牌蓋回去，換另一位玩家。</li>
+            </ul>
+        </li>
+        <li>時間結束時，系統會結算兩位玩家的累積分數，並顯示誰獲勝（或平手）。</li>
+    </ol>
+</div>
+
+<div id="gameBoard"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
