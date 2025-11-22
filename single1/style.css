@@ -1,0 +1,258 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Baloo 2","Noto Sans TC",system-ui,sans-serif;
+
+  /* 迪士尼海洋奇緣風格背景圖 */
+  background-image: url('ocean-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* 版心：手機邊距略小一點 */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px 8px 24px;
+}
+
+/* 標題區 */
+.site-header {
+  text-align: center;
+  text-shadow: 0 3px 0 rgba(255,255,255,.8);
+  margin-bottom: 6px;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 36px;
+  color: #ff8f00;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: #4e342e;
+}
+
+/* 白色面板 */
+.panel {
+  background: rgba(255,255,255,0.96);
+  padding: 16px;
+  border-radius: 18px;
+  margin-top: 12px;
+  border: 3px solid #ffe082;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.steps {
+  font-size: 14px;
+  padding-left: 20px;
+}
+
+.form-row {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+input[type="file"],
+input[type="number"],
+.share-input {
+  padding: 8px 12px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 2px solid #cfd8dc;
+}
+
+input[type="file"]:focus,
+input[type="number"]:focus,
+.share-input:focus {
+  outline: none;
+  border-color: #ffb300;
+  box-shadow: 0 0 0 3px rgba(255,179,0,0.25);
+}
+
+/* 按鈕 */
+.btn {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background: #ffca28;
+  box-shadow: 0 3px 0 #f57f17;
+}
+
+.btn-secondary {
+  background: #ffffff;
+  border: 2px solid #ccc;
+}
+
+.btn-start {
+  background: #81c784;
+  color: #fff;
+  box-shadow: 0 4px 0 #2e7d32;
+  min-width: 100px;
+}
+
+/* 上方時間 + Start */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.status {
+  background: #fffde7;
+  border: 2px solid #ffe082;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+/* 語音開關 */
+.audio-toggle {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+.audio-toggle label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.audio-toggle input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.msg {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ===== 卡牌區（4×4，無翻轉動畫） ===== */
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-width: 420px;  /* 桌機時的最大寬度 */
+  margin: 0 auto;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* 正方形卡片 */
+  cursor: pointer;
+}
+
+.card-inner {
+  position: absolute;
+  inset: 0;
+}
+
+/* 正反面疊在一起，用 .flipped 切換顯示 */
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  border: 3px solid #ffe082;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+/* 背面：有圖案 */
+.card-back {
+  background:
+    radial-gradient(circle at 10% 10%, #ffecb3 0, #ffecb3 32%, transparent 33%) repeat,
+    radial-gradient(circle at 70% 70%, #ffe082 0, #ffe082 32%, transparent 33%) repeat,
+    #ffd54f;
+  background-size: 40px 40px;
+}
+
+/* 正面：白底黑字，預設隱藏 */
+.card-front {
+  background: #ffffff;
+  border-color: #ccc;
+  display: none;
+}
+
+/* 翻牌：顯示正面、隱藏背面 */
+.card.flipped .card-front {
+  display: flex;
+}
+.card.flipped .card-back {
+  display: none;
+}
+
+/* 配對成功：正面變綠色 */
+.card.matched .card-front {
+  background: #c8e6c9;
+  border-color: #81c784;
+  color: #1b5e20;
+}
+
+/* ===== 手機版調整 ===== */
+
+@media (max-width: 600px) {
+  body {
+    background-attachment: scroll; /* 手機捲動比較順 */
+  }
+
+  .site-header h1 {
+    font-size: 30px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .panel {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .status {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  .board {
+    max-width: 340px; /* 手機時整體再小一點 */
+    gap: 8px;
+  }
+
+  .card-face {
+    font-size: 16px;  /* 手機上字稍微縮小，避免塞不下 */
+  }
+}
