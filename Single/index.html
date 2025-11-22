@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>Flip Card Game</title>
+
+  <!-- 童趣字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Excel 解析套件 -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+  <header class="site-header">
+    <h1>FLIP CARD GAME</h1>
+    <p class="subtitle">英漢對照翻牌記憶遊戲</p>
+  </header>
+
+  <!-- 老師模式 -->
+  <section id="teacher-panel" class="panel">
+    <h2>老師模式</h2>
+
+    <ol class="steps">
+      <li>準備 Excel 題庫：A 欄英文、B 欄中文。</li>
+      <li>上傳題庫並設定時間限制。</li>
+      <li>按「產生學生遊戲連結」。</li>
+    </ol>
+
+    <div class="form-row">
+      <label>題庫 Excel：</label>
+      <input type="file" id="excelFile" accept=".xlsx,.xls" />
+    </div>
+
+    <div class="form-row">
+      <label>時間限制（秒）：</label>
+      <input type="number" id="timeLimit" min="10" value="60" />
+    </div>
+
+    <button id="generateBtn" class="btn btn-primary">產生學生遊戲連結</button>
+
+    <div id="teacher-message" class="msg"></div>
+
+    <div id="share-area" class="share-area hidden">
+      <h3>學生遊戲連結</h3>
+      <input id="share-link" class="share-input" readonly />
+      <button id="copyBtn" class="btn btn-secondary">複製連結</button>
+      <p class="hint">學生打開此連結即可開始遊戲。</p>
+    </div>
+  </section>
+
+  <!-- 學生模式 / 遊戲 -->
+  <section id="game-section" class="panel hidden">
+    <h2>學生模式</h2>
+
+    <div class="top-bar">
+      <button id="startBtn" class="btn btn-start">Start</button>
+      <div class="status">
+        時間：<span id="timeDisplay">--</span> 秒　
+        分數：<span id="scoreDisplay">0</span>
+      </div>
+    </div>
+
+    <!-- ✅ 新增：語音開關 -->
+    <div class="audio-toggle">
+      <label>
+        <input type="checkbox" id="voiceToggle" checked />
+        開啟語音
+      </label>
+    </div>
+
+    <div id="gameBoard" class="board"></div>
+
+    <div id="game-message" class="msg"></div>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
